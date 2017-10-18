@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        		body{
+				background: #f7f8fa;
+			}
+			img{
+				vertical-align: middle;
+			}
+			h3,p{
+				margin: 0;
+			}
+			a{
+				text-decoration: none;
+			}
+			
+			#pic{
+				width: 720px;
+				overflow: hidden;
+				border-radius: 5px;
+				box-shadow: 0 0px 10px #333;
+				margin: 100px auto;
+			}
+			#left{
+				width: 520px;
+				height: 280px;
+				float: left;
+				position: relative;
+			}
+			#left a{
+				width: 40px;
+				height: 40px;
+				border-radius: 5px;
+				line-height: 40px;
+				background: rgba(0,0,0,0.6);
+				position: absolute;
+				top: 50%;
+				margin-top: -20px;
+				cursor: pointer;
+				text-align: center;
+				font-size: 30px;
+				font-weight: bold;
+				-webkit-text-stroke: 2px #fff;
+				-moz-text-stroke: 2px #fff;
+				box-shadow: 1px 2px 3px #000;
+				transition: 0.3s;
+			}
+			#left a:hover{
+				transform: scale(1.3);
+				background: rgba(0,0,0,0.8);
+			}
+			.prev{
+				left: 10px;
+			}
+			.next{
+				right: 10px;
+			}
+			.circle{
+				position: absolute;
+				bottom: 0;
+				width: 520px;
+				text-align: center;
+				font-size: 0;
+				line-height: 20px;
+			}
+			.circle span{
+				display: inline-block;
+				width: 13px;
+				height: 13px;
+				background: #a3903e;
+				border-radius: 50%;
+				margin: 0 5px;
+				cursor: pointer;
+				transition: 0.3s;
+				border: 1px solid #fff;
+			}
+			.circle span.active{
+				background: #f56a19;
+				transform: scale(1.5);
+			}
+			
+			#right{
+				float: right;
+				width: 180px;
+				height: 260px;
+				padding: 10px;
+				background: #f2f1f1;
+			}
+			.text h3{
+				font: 24px/40px "微软雅黑";
+				color: #333;
+			}
+			.text h3 span{
+				color: #cc330a;
+			}
+			.text p{
+				font: 20px/30px "微软雅黑";
+				color: #cc330a;
+				height: 90px;
+				margin: 20px 0;
+			}
+			.btn a{
+				display: block;
+				width: 120px;
+				height: 40px;
+				background: #ccc;
+				text-align: center;
+				line-height: 40px;
+				font-size: 20px;
+				font-family: "微软雅黑";
+				border-radius: 5px;
+				color: #fff;
+				margin-bottom: 10px;
+			}
+			.btn a.active{
+				background: #a3903e;
+			}
+			
+			@keyframes twinkle{
+				0%{
+					transform: scale(1);
+				}
+				15%{
+					transform: scale(1.3);
+				}
+				30%{
+					transform: scale(1);
+				}
+				45%{
+					transform: scale(1.6);
+				}
+			}
+    </style>
+</head>
+<body>
+<section id="pic">
+        <div id="left">
+            <img id="img" src="images/456fgf.jpg"/>
+            <a href="javascript:;" class="prev"><</a>
+            <a href="javascript:;" class="next">></a>
+            <div class="circle">
+                <span class="active"></span>
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+        <div id="right">
+            <div class="text">
+                <h3>图片数量 <span>1/5</span></h3>
+                <p>明前茶上市明前茶上市明前茶上市明前茶上市</p>
+            </div>
+            <div class="btn">
+                <a href="javascript:;" class="active">顺序切换</a>
+                <a href="javascript:;">循环切换</a>
+            </div>
+        </div>
+</section>
+<script>
+    //前后按钮
+    var prev = document.querySelector('.prev');
+    var next = document.querySelector('.next');
+    //图片数字和文字
+    var num = document.querySelector('h3 span');
+    var text = document.querySelector('.text p');
+    //图片
+    var img = document.getElementById('img');
+    //圆点指示器
+    var circles = document.querySelectorAll(".circle span");
+    //上一个圆点
+    var lastCircle = circles[0]; 
+    //切换模式按钮
+    var btns = document.querySelectorAll('.btn a');
+    //图片的名字
+    var imgArr=['456fgf','34435','sadsd','sdbg','sdfsdfcc'];
+    //图片对应的文字	
+    var textArr=['明前春茶又叫“明前茶”，指清明节前采制的茶叶','每次小S发微博晒她家女儿许老三的照片的时候','吃货福利一卡通，吃货们！ 福利来啦！一卡通拿去不谢！','夏春新品大牌走秀款印花上衣外套半身裙修身两件套连衣裙','实木家具都是未经再次加工的天然材料,不使用任何'];	
+    //索引变量
+    var n = 0;
+    //切换模式开关变量  顺序切换（true），循环切换（false）
+    var on = true; 
+    //初始化数字与文字
+    num.innerHTML = n + 1 + '/'+imgArr.length;
+    text.innerHTML = textArr[n];
+
+    //顺序切换点击
+    btns[0].onclick = function(){
+        on = true;
+        this.className = 'active';
+        btns[1].className = '';
+    }
+    //循环切换点击
+    btns[1].onclick = function(){
+        on = false;
+        btns[0].className = '';
+        this.className = 'active';
+    }
+    //下一张
+    next.onclick = function(){
+        n++;
+        if(n == imgArr.length){
+            if(on){ //说明现在是顺序切换模式，图片要停在最后一张
+                n = imgArr.length -1;
+                //添加动画效果
+                btns[0].style.animation='0.3s twinkle';
+                //持续动画效果
+                btns[0].addEventListener('animationend',function(){
+                    btns[0].style.animation='';
+                });
+            }else{ //循环切换，图片要回到第一张
+                n = 0;
+            }
+        }
+        // //更改图片数量和文字
+        // num.innerHTML = n + 1 + '/'+imgArr.length;
+        // text.innerHTML = textArr[n];
+        // //更改图片地址
+        // img.src = 'images/' + imgArr[n] + '.jpg';
+        // //指示器高亮
+        // lastCircle.className = '';
+        // circles[n].className = 'active';
+        // lastCircle = circles[n];
+        change(n);
+    }
+    //上一张
+    prev.onclick = function(){
+        n--;
+        if(n == -1){
+            if(on){  //顺序模式，图片要停在第一张
+                n = 0;
+                //添加动画效果
+                btns[0].style.animation='0.3s twinkle';
+                //持续动画效果
+                btns[0].addEventListener('animationend',function(){
+                    btns[0].style.animation='';
+                });
+            }else{
+                n = imgArr.length - 1; //循环切换，图片跳到最后一张
+            }
+        }
+        // //更改图片数量和文字
+        // num.innerHTML = n + 1 + '/'+imgArr.length;
+        // text.innerHTML = textArr[n];
+        // //更改图片地址
+        // img.src = 'images/' + imgArr[n] + '.jpg';
+        // //指示器高亮
+        // lastCircle.className = '';
+        // circles[n].className = 'active';
+        // lastCircle = circles[n];
+        change(n);
+    }
+    //封装函数，通过n来控制 页面元素
+    function change(n){
+        num.innerHTML = n + 1 + '/'+imgArr.length;
+        text.innerHTML = textArr[n];
+        //更改图片地址
+        img.src = 'images/' + imgArr[n] + '.jpg';
+        //指示器高亮
+        lastCircle.className = '';
+        circles[n].className = 'active';
+        lastCircle = circles[n];
+    }
+</script>
+</body>
+</html>

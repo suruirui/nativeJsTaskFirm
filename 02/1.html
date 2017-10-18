@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        #box{
+            width: 800px;
+            margin: 50px auto;
+            text-align: center;
+        }
+        div{
+            margin-bottom: 5px;
+        }
+        input{
+            width: 380px;
+            height: 30px;
+            color:red;
+            font-size: 14px;
+        }
+        .content{
+            margin-bottom: 30px;
+        }
+    </style>
+</head>
+<body>
+<div id="box">
+    <div class="content">
+         <h2>默认数据</h2>
+         <textarea cols="80" rows="10">[-27,'kings', 6-'20%',[],-5900,'800km',function(){alert('xxx');},,'xyz'-90,null,'66',document,[],true,'198px'-30,'49.9元',5,function(){alert(3);},Number('abc')]</textarea> <br>
+         <button id="btn">查看结果</button>
+    </div>
+    <div>
+        <strong>所有数字:</strong>
+        <input type="text" value='数组里的某个数据本身就是数字'>
+    </div>
+    <div>
+        <strong>可以转成数字的值:</strong>
+        <input type="text" value="除了数组里的对象类型和布尔值类型">
+    </div>
+    <div>
+        <strong>转换后的最大数值:</strong>
+        <input type="text" value="把所有的数据转成数字以后，找出最大值">
+    </div>
+    <div>
+        <strong>数组中的NaN的位置:</strong>
+        <input type="text" value="每个数据运算后的值为NaN">
+    </div>
+</div>
+<script>
+    var btn = document.getElementById('btn');
+    var txt = document.querySelector('textarea');
+    var inputs = document.querySelectorAll('input');
+    /*
+        找到：1.数组里的某个数据本身就是数字
+              2.除了数组里的对象类型和布尔值类型
+              3.把所有的数据转成数字以后，找出最大值
+              4.每个数据运算后的值为NaN的位置
+    */
+    var arr = [-27,'kings', 6-'20%',[],-5900,'800km',function(){alert('xxx');},,'xyz'-90,null,'66',document,[],true,'198px'-30,'49.9元',5,function(){alert(3);},Number('abc')];
+    var arr1 = [],arr2 = [],arr3 = [],arr4 = [];
+    for(var i=0;i<arr.length;i++){
+        //判断本身就是数字的元素
+        if(typeof arr[i] == 'number'){
+            if(!isNaN(arr[i])){
+                arr1.push(arr[i]);
+            }
+        }
+        //除了数组里的对象类型和布尔值类型 所有能转成数字的
+        /*
+            转数字的方法:Number() parseInt() parseFloat()
+            其中Number()可以将布尔类型转为数字
+        */
+        if(!isNaN(parseInt(arr[i]))){
+            arr2.push(arr[i]);
+        }
+        //把所有的数据转成数字以后，找出最大值
+        if(!isNaN(arr[i])){
+            arr3.push(Number(arr[i]));
+        }
+        //每个数据运算后的值为NaN的
+        if(arr[i] != arr[i]){  //NaN不等于NaN isNaN不可以是因为有的元素经过转换可以是数字
+             arr4.push(i);
+        }
+    }
+    
+    function getMax(arr){
+        var max = 0;
+        for(var i=0;i<arr.length;i++){
+            if(arr[i]>max){
+                max = arr[i];
+            }
+        }
+        return max;
+    }
+    
+    btn.onclick = function(){
+        //所有输入框文字变蓝
+        for(var i=0;i<inputs.length;i++){
+            inputs[i].style.color='blue';
+        }
+        inputs[0].value = arr1;
+        inputs[1].value = arr2;
+        inputs[2].value = getMax(arr3);
+        inputs[3].value = arr4;
+    }
+
+</script>
+</body>
+</html>
