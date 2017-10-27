@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        #box{
+            width: 100px;
+            height: 100px;
+            background: green;
+            position: absolute;
+            left: 0;
+            top: 0;
+        }
+    </style>
+</head>
+<body>
+        <div id="box"></div>
+</body>
+<script>
+    var box = document.getElementById('box');
+    var key = {
+        37:false,  //左
+        38:false,  //上
+        39:false,  //右
+        40:false   //下
+    };
+    document.onkeydown = function(ev){
+        key[ev.keyCode] = true;
+    }
+    document.onkeyup = function(ev){
+        key[ev.keyCode] = false;
+    }
+    setInterval(function(){
+        if(key[37]){   //左
+            box.style.left = box.offsetLeft-5+'px';
+        }
+        if(key[38]){  //上
+            box.style.top = box.offsetTop-5+'px';
+        }
+        if(key[39]){  //右
+            box.style.left = box.offsetLeft+5+'px';
+        }
+        if(key[40]){  //下
+            box.style.top = box.offsetTop+5+'px';
+        }
+    },16);
+</script>
+</html>

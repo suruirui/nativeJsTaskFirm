@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        *{
+				margin: 0;
+				padding: 0;
+			}
+			img{
+				width: 500px;
+				height: 500px;
+				vertical-align: top;
+			}
+			#box{
+				width: 500px;
+				height: 500px;
+				overflow: hidden;
+				margin: 50px auto;
+				position: relative;
+				box-shadow: 0 0 40px #333;
+			}
+			#box div{
+				position: absolute;
+				left: 0;
+				top: 0;
+				font-size: 0;
+			}
+			
+			#box div img{
+				display: inline-block;
+			}
+    </style>
+</head>
+<body>
+<div id="box">
+    <div>
+        <img src="images/1.jpg"/>		//0
+        <img src="images/2.jpg"/>		//1
+        <img src="images/3.jpg"/>		//2
+        <img src="images/4.jpg"/>
+        <img src="images/5.jpg"/>
+    </div>
+</div>
+<script src="js/move.js"></script>
+<script>    
+    var inner = document.querySelector('#box div');
+    // var imgs = document.querySelectorAll('img');
+    var imgs = document.getElementsByTagName('img');
+    var w = imgs[0].offsetWidth;  //图片宽度
+
+    var moving = true;  //是否可以运动的开关 false则不能运动
+
+    document.onkeydown = function(ev){
+        if(!moving){
+            return; 
+        }
+        moving = false;
+        switch(ev.keyCode){
+            case 37:  //左
+                inner.style.width = w * imgs.length + 'px';
+                move(inner,{left:-w},400,'linear',function(){
+                    inner.appendChild(imgs[0]);
+                    inner.style.left = 0;
+                    moving = true;
+                });
+                break;
+            case 38: //上
+                inner.style.width =  w + 'px';
+                move(inner,{top:-w},400,'linear',function(){
+                    inner.appendChild(imgs[0]);
+                    inner.style.top = 0;
+                    moving = true;
+                });
+                break;
+            case 39:  //右
+                inner.style.width = w * imgs.length + 'px';
+                inner.insertBefore(imgs[imgs.length - 1],imgs[0]);
+                inner.style.left = -w + 'px';
+                move(inner,{left:0},400,'linear',function(){
+                    inner.appendChild(imgs[0]);
+                    inner.style.left = 0;
+                    moving = true;
+                });
+                break;
+            case 40:  //下
+                inner.style.width = w + 'px';
+                inner.insertBefore(imgs[imgs.length - 1],imgs[0]);
+                inner.style.top = -w + 'px';
+                move(inner,{top:0},400,'linear',function(){
+                    moving = true;
+                });
+                break;
+        }
+    }
+</script>
+</body>
+</html>
